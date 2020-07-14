@@ -1,0 +1,62 @@
+Partlist
+
+Exported from higheTemp.brd at 10-May-20 1:04 PM
+
+EAGLE Version 9.5.2 Copyright (c) 1988-2019 Autodesk, Inc.
+
+Assembly variant: 
+
+Part     Value          Package              Library                    Position (mil)        Orientation
+
+C6       0.1uF          C0603                rcl                        (610 1950)            R0
+C7       0.1uF          C0603                rcl                        (610 2050)            R0
+C8       0.1uF          C0603                rcl                        (430 1775)            R0
+C9       0.01uF         C0603                rcl                        (585 1775)            R0
+C10      0.01uF         C0603                rcl                        (280 1775)            R180
+C16      0.1uF          C0603                rcl                        (1210 1950)           R0
+C17      0.1uF          C0603                rcl                        (1210 2050)           R0
+C18      0.1uF          C0603                rcl                        (1030 1775)           R0
+C19      0.01uF         C0603                rcl                        (1185 1775)           R0
+C20      0.01uF         C0603                rcl                        (880 1775)            R180
+C26      0.1uF          C0603                rcl                        (1810 1950)           R0
+C27      0.1uF          C0603                rcl                        (1810 2050)           R0
+C28      0.1uF          C0603                rcl                        (1630 1775)           R0
+C29      0.01uF         C0603                rcl                        (1785 1775)           R0
+C30      0.01uF         C0603                rcl                        (1480 1775)           R180
+C36      0.1uF          C0603                rcl                        (2410 1950)           R0
+C37      0.1uF          C0603                rcl                        (2410 2050)           R0
+C38      0.1uF          C0603                rcl                        (2230 1775)           R0
+C39      0.01uF         C0603                rcl                        (2385 1775)           R0
+C40      0.01uF         C0603                rcl                        (2080 1775)           R180
+C46      0.1uF          C0603                rcl                        (3010 1950)           R0
+C47      0.1uF          C0603                rcl                        (3010 2050)           R0
+C48      0.1uF          C0603                rcl                        (2830 1775)           R0
+C49      0.01uF         C0603                rcl                        (2985 1775)           R0
+C50      0.01uF         C0603                rcl                        (2680 1775)           R180
+IC2      MAX31856MUD+   SOP65P640X110-14N    SamacSys_Parts             (411.41732 2000.3937) R90
+IC4      MAX31856MUD+   SOP65P640X110-14N    SamacSys_Parts             (1011.41732 2000.3937) R90
+IC6      MAX31856MUD+   SOP65P640X110-14N    SamacSys_Parts             (1611.41732 2000.3937) R90
+IC8      MAX31856MUD+   SOP65P640X110-14N    SamacSys_Parts             (2211.41732 2000.3937) R90
+IC10     MAX31856MUD+   SOP65P640X110-14N    SamacSys_Parts             (2811.41732 2000.3937) R90
+J1       POWER_JACK     POWER_JACK_PTH       SparkFun-Connectors        (-5 2760)             R270
+J3       TB006-508-02BE TB00650802BE         SamacSys_Parts             (600 1250)            R180
+J5       TB006-508-02BE TB00650802BE         SamacSys_Parts             (1200 1250)           R180
+J7       TB006-508-02BE TB00650802BE         SamacSys_Parts             (1800 1250)           R180
+J9       TB006-508-02BE TB00650802BE         SamacSys_Parts             (2400 1250)           R180
+J11      TB006-508-02BE TB00650802BE         SamacSys_Parts             (3000 1250)           R180
+LED1                    CHIPLED_0805         led                        (100 1435)            R180
+LED2                    CHIPLED_0805         led                        (950 2750)            R180
+LED3                    CHIPLED_0805         led                        (1050 2750)           R180
+LED4                    CHIPLED_0805         led                        (1150 2750)           R180
+R1       10k            R0603                rcl                        (2335 3705)           R90
+R2       10k            R0603                rcl                        (2260 3815)           R270
+R3       10k            R0805                rcl                        (2550 3100)           R90
+R4       1k             R0603                rcl                        (100 1600)            R90
+R5       1k             R0603                rcl                        (950 2900)            R270
+R6       1k             R0603                rcl                        (1050 2900)           R270
+R7       1k             R0603                rcl                        (1150 2900)           R270
+S1       EG1270         EG1270               SamacSys_Parts             (200 2165)            R0
+U$1      NANO33IOT      NANO33IOT            AndrewFootprint            (137.40157 3099.6063) R90
+U$2                     CR1220-SMD           adafruit                   (2770 3640)           R0
+U$3      MICROSD        MICROSD              adafruit                   (2650 2750)           R90
+U1       DS3231SN       SOIC127P1032X265-16N Maxim_By_element14_Batch_1 (2000 3550)           R0
