@@ -15,11 +15,13 @@ const int TS1_chipSelect = 7; // Chipselect for temp senor channel 1
 const int TS2_chipSelect = 6; // Chipselect for temp senor channel 2
 const int TS3_chipSelect = 5; // Chipselect for temp senor channel 3
 const int TS4_chipSelect = 4; // Chipselect for temp senor channel 4
+const int TS5_chipSelect = 3; // Chipselect for temp senor channel 5
 
 Adafruit_MAX31856 maxthermo1 = Adafruit_MAX31856(TS1_chipSelect);
 Adafruit_MAX31856 maxthermo2 = Adafruit_MAX31856(TS2_chipSelect);
 Adafruit_MAX31856 maxthermo3 = Adafruit_MAX31856(TS3_chipSelect);
 Adafruit_MAX31856 maxthermo4 = Adafruit_MAX31856(TS4_chipSelect);
+Adafruit_MAX31856 maxthermo5 = Adafruit_MAX31856(TS5_chipSelect);
 
 //_____________________________________________________
 // Function: Get time 
@@ -78,6 +80,7 @@ String getTemp(){
   maxthermo2.triggerOneShot();
   maxthermo3.triggerOneShot();
   maxthermo4.triggerOneShot();
+  maxthermo5.triggerOneShot();
   delay(600);
   
   ///// Get temp: Channel 1
@@ -104,10 +107,16 @@ String getTemp(){
   tempResult4 = maxthermo4.readThermocoupleTemperature();
   tempString4 = String(tempResult4);
 
+  ///// Get temp: Channel 5
+  float tempResult5;
+  String tempString5; 
+  tempResult5 = maxthermo5.readThermocoupleTemperature();
+  tempString5 = String(tempResult5);
+
 
   
   // Compile results
-  majorResult = tempString1 + ", " + tempString2 + ", " + tempString3 + ", " + tempString4;
+  majorResult = tempString1 + ", " + tempString2 + ", " + tempString3 + ", " + tempString4 + ", " + tempString5;
   return majorResult;     
 }
 
@@ -195,6 +204,15 @@ void setup() {
   }
   maxthermo4.setThermocoupleType(MAX31856_TCTYPE_K);
   maxthermo4.setConversionMode(MAX31856_ONESHOT_NOWAIT);
+
+  // Channel 5
+  if (!maxthermo5.begin()) {
+    Serial.println("Could not initialize thermocouple 5.");
+    Serial.println("got to here");
+    while (1) delay(10);
+  }
+  maxthermo5.setThermocoupleType(MAX31856_TCTYPE_K);
+  maxthermo5.setConversionMode(MAX31856_ONESHOT_NOWAIT);
     
 
   
@@ -213,15 +231,14 @@ void loop() {
     
   String  tempOut = getTemp();
 //  Serial.println(tempOut);
-  String data = getTime()+", " + tempOut;   
+//  String data = getTime()+", " + tempOut;/
+    String data = tempOut; 
 //  storeData("Dt.txt", data); // Keep file name short (<8 Characters)
   
   digitalWrite(A1, LOW);
 
   // Print data to serial
-  Serial.println(data);
-   
-  
+  Serial.println(data);  
 
   delay(1000);
 }
