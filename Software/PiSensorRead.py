@@ -2,6 +2,10 @@ import serial
 import datetime
 import pandas
 
+
+fileName = 'test1.txt'
+
+
 def writeFile(filename, data):
 	file = open(filename, "a")
 	file.write(data)
@@ -22,5 +26,5 @@ while(1):
 	serPorts = ['ttyACM0']
 	for i in serPorts:
 		results = readSerial(i, 9600)
-		writeFile('sense_data.txt', results)
+		writeFile(fileName, results)
 	
