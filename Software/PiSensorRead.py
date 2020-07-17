@@ -2,9 +2,7 @@ import serial
 import datetime
 import pandas
 
-
-fileName = 'test1.txt'
-
+fileName = 'hotWaterTest.txt'
 
 def writeFile(filename, data):
 	file = open(filename, "a")

@@ -2,9 +2,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import datetime
 
-data = pd.read_csv('test1.txt', header = None)
-print()
-
+data = pd.read_csv('hotWaterTest.txt', header = None)
+print(data)
 
 def visData(data):
     plt.plot(data[0], data[1], label = 'Channel 1' )
@@ -18,5 +17,5 @@ def visData(data):
     plt.ylabel('Temperature (^oC)')
     plt.show()
 
-
+print("Plotting data")
 visData(data)
