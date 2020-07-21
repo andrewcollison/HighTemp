@@ -8,9 +8,9 @@
 
 
 // MQTT Server allocation
-const char* ssid = "HeadOffice";
+const char* ssid = "control1";
 const char* password = "internetplease";
-const char* mqttServer = "192.168.0.100";
+const char* mqttServer = "192.168.1.4";
 const char* mqttUsername = "mqtt";
 const char* mqttPassword = "mqtt";
 
