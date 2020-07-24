@@ -2,10 +2,10 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import datetime
 
-data = pd.read_csv('hotWaterTest.txt', header = None)
+data = pd.read_csv('officeTest.txt', header = None)
 data[0] = pd.to_datetime(data[0], infer_datetime_format=True)
 data = data.set_index(0)
-data = data.resample('1T').mean()
+data = data.resample('5T').mean()
 print(data)
 
 def visData(data):
@@ -17,7 +17,7 @@ def visData(data):
     plt.legend()
     plt.title('Temperature Monitoring')
     plt.xlabel('Time')
-    plt.ylabel('Temperature (^oC)')
+    plt.ylabel('Temperature ($^o$C)')
     plt.show()
 
 print("Plotting data")
