@@ -1,10 +1,10 @@
 #include <SPI.h>
-#include <SD.h>
-#include "RTClib.h"
+//#include <SD.h>
+//#include "RTClib.h"
 #include <Adafruit_MAX31856.h>
 #include <WiFiNINA.h> 
 #include <PubSubClient.h>
-#include "credentials.h"
+//#include "credentials.h"
 
 
 // MQTT Server allocation
@@ -15,7 +15,7 @@ const char* mqttUsername = "mqtt";
 const char* mqttPassword = "mqtt";
 
 char subTopic[] = "arduino/temp1cmd";     //payload[0] will control/set LED
-char pubTopic[] = "arduino/temp1";       //payload[0] will have ledState value
+char pubTopic[] = "arduino/temp2";       //payload[0] will have ledState value
 unsigned long lastMsg = 0;
 int value = 0;
 #define MSG_BUFFER_SIZE  (100)
@@ -25,10 +25,8 @@ WiFiClient wifiClient;
 PubSubClient client(wifiClient);
 
 // Define constants
-const int SDchipSelect = 2;
-RTC_DS1307 rtc;
-char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
-int timeElapsed = 0;
+//const int SDchipSelect = 2;
+//RTC_DS1307 rtc;
 const int TS1_chipSelect = 7; // Chipselect for temp senor channel 1
 const int TS2_chipSelect = 6; // Chipselect for temp senor channel 2
 const int TS3_chipSelect = 5; // Chipselect for temp senor channel 3
@@ -43,49 +41,49 @@ Adafruit_MAX31856 maxthermo5 = Adafruit_MAX31856(TS5_chipSelect);
 
 //_____________________________________________________
 // Function: Get time 
-String getTime(){
-  DateTime now = rtc.now();
-  String current_year = String(now.year());  
-  String current_month ; 
-  if(now.month() < 10){
-     current_month = String(0) + String(now.month());     
-    }
-  else{
-    current_month = String(now.month());    
-    }    
-  String current_day;
-  if(now.day() < 10){
-     current_day = String(0) + String(now.day());
-    }
-  else{
-    current_day = String(now.day());    
-    }  
-  String current_hour = String(now.hour());
-  String current_minute = String(now.minute());
-  String current_second = String(now.second());
-  
-  // Fotmat data in ISO8601 Standard format
-  String time_data = current_year + "-" + current_month + "-" + current_day + "," + current_hour + ":" + current_minute + ":" + current_second;  
-  return time_data;  
-}
+//String getTime(){
+//  DateTime now = rtc.now();
+//  String current_year = String(now.year());  
+//  String current_month ; 
+//  if(now.month() < 10){
+//     current_month = String(0) + String(now.month());     
+//    }
+//  else{
+//    current_month = String(now.month());    
+//    }    
+//  String current_day;
+//  if(now.day() < 10){
+//     current_day = String(0) + String(now.day());
+//    }
+//  else{
+//    current_day = String(now.day());    
+//    }  
+//  String current_hour = String(now.hour());
+//  String current_minute = String(now.minute());
+//  String current_second = String(now.second());
+//  
+//  // Fotmat data in ISO8601 Standard format
+//  String time_data = current_year + "-" + current_month + "-" + current_day + "," + current_hour + ":" + current_minute + ":" + current_second;  
+//  return time_data;  
+//}
   
 //_____________________________________________________
 // Function: Store Data
-void storeData(String filename, String readout){
-    File dataFile = SD.open(filename, FILE_WRITE);
-  // if the file is available, write to it:
-  if (dataFile) {
-    dataFile.println(readout);
-    dataFile.close();
-    // print to the serial port too:
-    //Serial.println(readout);
-  }
-  // if the file isn't open, pop up an error:
-  else {
-    Serial.println("error opening data file");
-    digitalWrite(A2, HIGH);
-  }  
-}
+//void storeData(String filename, String readout){
+//    File dataFile = SD.open(filename, FILE_WRITE);
+//  // if the file is available, write to it:
+//  if (dataFile) {
+//    dataFile.println(readout);
+//    dataFile.close();
+//    // print to the serial port too:
+//    //Serial.println(readout);
+//  }
+//  // if the file isn't open, pop up an error:
+//  else {
+//    Serial.println("error opening data file");
+//    digitalWrite(A2, HIGH);
+//  }  
+//}
 
 
 //_____________________________________________________
@@ -239,10 +237,10 @@ void setup() {
 
   
   // Setting Up RTC
-  if (! rtc.begin()) {
-    Serial.println("Couldn't find RTC");
-    while (1);
-  }
+//  if (! rtc.begin()) {
+//    Serial.println("Couldn't find RTC");
+//    while (1);
+//  }
 
   // Set pinMode for led
   pinMode(A0, OUTPUT);
@@ -256,24 +254,24 @@ void setup() {
 
 
   
-  if (! rtc.isrunning()) {
-    Serial.println("RTC is NOT running!");
-    // following line sets the RTC to the date & time this sketch was compiled
-     rtc.adjust(DateTime(__DATE__, __TIME__));
-    }
+//  if (! rtc.isrunning()) {
+//    Serial.println("RTC is NOT running!");
+//    // following line sets the RTC to the date & time this sketch was compiled
+//     rtc.adjust(DateTime(__DATE__, __TIME__));
+//    }
 //    rtc.adjust(DateTime(__DATE__, __TIME__)); // Uncomment this line to reset rtc time to current time
 
     // Setup SD card storage
     //  Serial.println("Initializing SD card...");
     // see if the card is present and can be initialized:
-    if (!SD.begin(SDchipSelect)) {
-      Serial.println("Card failed, or not present");
-      // don't do anything more:
-      Serial.println("SD failure");
-      digitalWrite(A2, HIGH);
+//    if (!SD.begin(SDchipSelect)) {
+//      Serial.println("Card failed, or not present");
+//      // don't do anything more:
+//      Serial.println("SD failure");
+//      digitalWrite(A2, HIGH);
 //      while (1);
-    }
-    Serial.println("card initialized.");
+//    }
+//    Serial.println("card initialized.");
 
   
 
@@ -354,7 +352,7 @@ void loop() {
 //    snprintf (msg, MSG_BUFFER_SIZE, "%ld", data);
     Serial.print("Publish message: ");
     Serial.println(data);
-    client.publish("temp1", char_array);
+    client.publish("temp2", char_array);
   }
 
 }
