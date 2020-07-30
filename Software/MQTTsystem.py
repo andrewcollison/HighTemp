@@ -30,7 +30,8 @@ client = mqtt.Client()
 client.on_subscribe = on_subscribe
 client.on_message = on_message
 client.connect("192.168.1.4", 1883)
-client.subscribe("temp1", qos=1)
+# client.subscribe("temp1", qos=1)
+client.subscribe([("temp1", 1), ("temp2", 1)])
 
 client.loop_forever()
     
