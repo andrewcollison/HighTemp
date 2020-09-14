@@ -15,7 +15,7 @@ def on_connect(client, userdata, flags, rc):
   client.subscribe("topic/temp1")
 
 def on_subscribe(client, userdata, mid, granted_qos):
-    print("Subscribed: "+str(mid)+" "+str(granted_qos))
+    print("Subscribed: "+ str(mid) +" "+ str(granted_qos))
 
 def on_message(client, userdata, msg):
     # print(msg.topic+" "+str(msg.qos)+" "+str(msg.payload))

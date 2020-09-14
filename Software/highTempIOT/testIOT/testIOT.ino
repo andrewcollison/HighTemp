@@ -1,16 +1,32 @@
 #include <SPI.h>
-#include <SD.h>
+//#include <SD.h>
 //#include "RTClib.h"
 #include <Adafruit_MAX31856.h>
-// A0: Stat LED
-// A1: Log LED
-// A2: Error LED
+//#include <WiFiNINA.h> 
+//#include <PubSubClient.h>
+//#include "credentials.h"
+
+
+// MQTT Server allocation
+//const char* ssid = "control1";
+//const char* password = "internetplease";
+//const char* mqttServer = "192.168.1.4";
+//const char* mqttUsername = "mqtt";
+//const char* mqttPassword = "mqtt";
+
+//char subTopic[] = "arduino/temp1cmd";     //payload[0] will control/set LED
+//char pubTopic[] = "arduino/temp2";       //payload[0] will have ledState value
+unsigned long lastMsg = 0;
+int value = 0;
+#define MSG_BUFFER_SIZE  (100)
+char msg[MSG_BUFFER_SIZE];
+
+//WiFiClient wifiClient;
+//PubSubClient client(wifiClient);
 
 // Define constants
 //const int SDchipSelect = 2;
 //RTC_DS1307 rtc;
-//char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
-//int timeElapsed = 0;
 const int TS1_chipSelect = 7; // Chipselect for temp senor channel 1
 const int TS2_chipSelect = 6; // Chipselect for temp senor channel 2
 const int TS3_chipSelect = 5; // Chipselect for temp senor channel 3
@@ -53,21 +69,21 @@ Adafruit_MAX31856 maxthermo5 = Adafruit_MAX31856(TS5_chipSelect);
   
 //_____________________________________________________
 // Function: Store Data
-void storeData(String filename, String readout){
-    File dataFile = SD.open(filename, FILE_WRITE);
-  // if the file is available, write to it:
-  if (dataFile) {
-    dataFile.println(readout);
-    dataFile.close();
-    // print to the serial port too:
-    //Serial.println(readout);
-  }
-  // if the file isn't open, pop up an error:
-  else {
-    Serial.println("error opening data file");
-    digitalWrite(A2, HIGH);
-  }  
-}
+//void storeData(String filename, String readout){
+//    File dataFile = SD.open(filename, FILE_WRITE);
+//  // if the file is available, write to it:
+//  if (dataFile) {
+//    dataFile.println(readout);
+//    dataFile.close();
+//    // print to the serial port too:
+//    //Serial.println(readout);
+//  }
+//  // if the file isn't open, pop up an error:
+//  else {
+//    Serial.println("error opening data file");
+//    digitalWrite(A2, HIGH);
+//  }  
+//}
 
 
 //_____________________________________________________
@@ -116,11 +132,93 @@ String getTemp(){
 
   
   // Compile results
-  majorResult = tempString1 + ", " + tempString2 + ", " + tempString3 + ", " + tempString4 + ", " + tempString5;
+  majorResult = tempString1 + ", " + tempString2 + ", " + tempString3 + ", " + tempString4 + ", " + tempString5; 
   return majorResult;     
 }
 
+//_____________________________________________________
+// Function: Reconnect to mqtt server
+//void reconnect() 
+//{
+//  // Loop until we're reconnected
+//  while (!client.connected()) 
+//  {
+//    Serial.print("Attempting MQTT connection...");
+//    // Create a random client ID
+//    String clientId = "ArduinoClient-";
+//    clientId += String(random(0xffff), HEX);
+//    // Attempt to connect
+//    if (client.connect(clientId.c_str(), mqttUsername, mqttPassword)) 
+//    {
+//      Serial.println("connected");
+//      // ... and resubscribe
+//      client.subscribe(subTopic);
+//    } else 
+//    {
+//      Serial.print("failed, rc=");
+//      Serial.print(client.state());
+//      Serial.println(" try again in 5 seconds");
+//      // Wait 5 seconds before retrying
+//      delay(5000);
+//    }
+//  }
+//}
 
+
+//_____________________________________________________
+// Function: Callback
+//void callback(char* topic, byte* payload, unsigned int length) {
+//  Serial.print("Message arrived [");
+//  Serial.print(topic);
+//  Serial.print("] ");
+//  for (int i = 0; i < length; i++) {
+//    Serial.print((char)payload[i]);
+//  }
+//  Serial.println();
+//
+//  // Switch on the LED if an 1 was received as first character
+//  if ((char)payload[0] == '1') {
+////    digitalWrite(BUILTIN_LED, LOW);   // Turn the LED on (Note that LOW is the voltage level
+//    Serial.println("LED on");
+//    // but actually the LED is on; this is because
+//    // it is active low on the ESP-01)
+//  } else {
+////    digitalWrite(BUILTIN_LED, HIGH);  // Turn the LED off by making the voltage HIGH
+//    Serial.println("LED off");
+//  }
+//
+//}
+
+
+
+/////////// Setup ///////////
+
+//_____________________________________________________
+// Function: Wifi Setup
+//void setup_wifi() 
+//{
+//  delay(10);
+//  
+//  // We start by connecting to a WiFi network
+//  Serial.println();
+//  Serial.print("Connecting to ");
+//  Serial.println(ssid);
+//
+//  WiFi.begin(ssid, password);
+//
+//  while (WiFi.status() != WL_CONNECTED) 
+//  {
+//    delay(500);
+//    Serial.print(".");
+//  }
+//
+//  randomSeed(micros());
+//
+//  Serial.println("");
+//  Serial.println("WiFi connected");
+//  Serial.println("IP address: ");
+//  Serial.println(WiFi.localIP());
+//} 
 //_____________________________________________________
 // Function: Setup
 void setup() {
@@ -128,6 +226,16 @@ void setup() {
   // start serial port
   Serial.begin(9600);
   Serial.println("got to here");
+
+  // Setting up mqtt server
+//  setup_wifi();
+//  client.setServer(mqttServer, 1883);
+//  client.setCallback(callback);
+
+
+
+
+  
   // Setting Up RTC
 //  if (! rtc.begin()) {
 //    Serial.println("Couldn't find RTC");
@@ -161,7 +269,7 @@ void setup() {
 //      // don't do anything more:
 //      Serial.println("SD failure");
 //      digitalWrite(A2, HIGH);
-////      while (1);
+//      while (1);
 //    }
 //    Serial.println("card initialized.");
 
@@ -226,19 +334,25 @@ void setup() {
 // Main Loop
 void loop() {
   // put your main code here, to run repeatedly:
-  // Get temperature from sensor
-  digitalWrite(A1, HIGH);
+
+//  if (!client.connected()) {
+//    reconnect();
+//  }
+//  client.loop();
+
+  unsigned long now = millis();
+  if (now - lastMsg > 2000) {
+    lastMsg = now;
+    ++value;
+    String data = getTemp();
+    int str_len = data.length() + 1;
+    char char_array[str_len];
+    data.toCharArray(char_array, str_len);
     
-  String  tempOut = getTemp();
-//  Serial.println(tempOut);
-//  String data = getTime()+", " + tempOut;/
-    String data = tempOut; 
-//  storeData("Dt.txt", data); // Keep file name short (<8 Characters)
-  
-  digitalWrite(A1, LOW);
+//    snprintf (msg, MSG_BUFFER_SIZE, "%ld", data);
+    Serial.print("Publish message: ");
+    Serial.println(data);
+//    client.publish("temp2", char_array);
+  }
 
-  // Print data to serial
-  Serial.println(data);  
-
-  delay(1000);
 }
