@@ -21,11 +21,11 @@ def on_message(client, userdata, msg):
     # print(msg.topic+" "+str(msg.qos)+" "+str(msg.payload))
     currTime = datetime.datetime.now()
     data = str(msg.payload, 'utf-8')
-    logString = str(currTime) + ", " + data + "\n"
+    logString = str(currTime) + ", " + msg.topic + ", " + data + "\n"
     writeFile(fileName, logString)
     print(logString)
        
-
+ 
 client = mqtt.Client()
 client.on_subscribe = on_subscribe
 client.on_message = on_message
