@@ -82,11 +82,12 @@ float fmap(float x, float in_min, float in_max, float out_min, float out_max)
 //______________________________________________
 // Get pressure data
 void getPress(){
-  resultData[0] = avgPress(A0, 100);
-  resultData[1] = avgPress(A1, 100);
-  resultData[2] = avgPress(A2, 100);
-  resultData[3] = avgPress(A3, 100);
-  resultData[4] = avgPress(A6, 100);  
+  resultData[0] = avgPress(A0, 50);
+  Serial.println("Ch 1 Complete");
+//  resultData[1] = avgPress(A1, 100);
+//  resultData[2] = avgPress(A2, 100);
+//  resultData[3] = avgPress(A3, 100);
+//  resultData[4] = avgPress(A6, 100);  
 }
 
 //______________________________________________
@@ -168,7 +169,8 @@ void loop() {
   if (now - lastMsg > 2000) {
     lastMsg = now;
     ++value;
-    String data = String(resultData[0]) + "," + String(resultData[1]) + "," + String(resultData[2]) + "," + String(resultData[3]) + "," + String(resultData[4]);
+    getPress();
+    String data = String(resultData[0], 3) + "," + String(resultData[1],3) + "," + String(resultData[2],3) + "," + String(resultData[3],3) + "," + String(resultData[4],3);
     int str_len = data.length() + 1;
     char char_array[str_len];
     data.toCharArray(char_array, str_len);
