@@ -14,7 +14,7 @@ unsigned long lastMsg = 0;
 int value = 0;
 #define MSG_BUFFER_SIZE  (100)
 char msg[MSG_BUFFER_SIZE];
-
+float resultData[5] = {0, 0, 0, 0, 0};
 
 WiFiClient wifiClient;
 PubSubClient client(wifiClient);
@@ -72,21 +72,48 @@ void callback(char* topic, byte* payload, unsigned int length) {
 
 }
 
-//_____________________________________________________
-// Temperature Sensors
-
-// Read Sensors
-String getPress(){
-  // Channel 1
-  float volt1 = analogRead(A0)*(5.0 / 1023.0);
-  float  press1 = map(volt1, 0.6, 3.3, 0, 100);
-  
-
-  
-  // Compile results
-  String  majorResult = String(press1); 
-  return majorResult;     
+//______________________________________________
+// Map values as floats
+float fmap(float x, float in_min, float in_max, float out_min, float out_max)
+{
+    return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
+
+//______________________________________________
+// Get pressure data
+void getPress(){
+  resultData[0] = avgPress(A0, 100);
+  resultData[1] = avgPress(A1, 100);
+  resultData[2] = avgPress(A2, 100);
+  resultData[3] = avgPress(A3, 100);
+  resultData[4] = avgPress(A6, 100);  
+}
+
+//______________________________________________
+// Analog to pressure 
+float avgPress(int anPin, int ns){
+  float tallyList[ns] = {};
+  for(int i=0; i < ns; i++){
+    float  an = analogRead(anPin); 
+    float testV= fmap(an, 0.000, 1023.000, 0.000, 3.300);
+    tallyList[i] = fmap(testV, 0.681, 3.400, 0.000, 100.000);
+//    Serial.print("Average tally");
+//    Serial.println(String(tallyList));
+    delay(100);
+  }
+  float tallyP;
+  for(int i =0; i < ns; i++){
+    tallyP = tallyP + tallyList[i];    
+  }
+//  Serial.print("tallyP: ");
+//  Serial.println(tallyP);
+
+  float avgP = (tallyP/ns)*0.01;
+//  Serial.print("Average Press: ");
+//  Serial.println(avgP, 3);  
+  return avgP;
+}
+
 
 /////////// Setup ///////////
 
@@ -118,11 +145,6 @@ void setup_wifi()
 } 
 
 
-
-
-
-
-
 void setup() {
   // Serial Coms
   Serial.begin(9600);
@@ -132,13 +154,7 @@ void setup() {
   setup_wifi();
   client.setServer(mqttServer, 1883);
   client.setCallback(callback);
-
-  // Set pinMode for sensor
-  pinMode(A0, INPUT);
-
-
-  Serial.println("Setup Complete");
-  
+  Serial.println("Setup Complete");  
 }
 
 void loop() {
@@ -152,7 +168,7 @@ void loop() {
   if (now - lastMsg > 2000) {
     lastMsg = now;
     ++value;
-    String data = getPress();
+    String data = String(resultData[0]) + "," + String(resultData[1]) + "," + String(resultData[2]) + "," + String(resultData[3]) + "," + String(resultData[4]);
     int str_len = data.length() + 1;
     char char_array[str_len];
     data.toCharArray(char_array, str_len);
@@ -160,7 +176,7 @@ void loop() {
 //    snprintf (msg, MSG_BUFFER_SIZE, "%ld", data);
     Serial.print("Publish message: ");
     Serial.println(data);
-    client.publish("temp2", char_array);
+    client.publish("press1", char_array);
   }
 
 }
