@@ -1,5 +1,6 @@
 from PyQt5 import QtWidgets, uic
 import sys
+import serial
 
 class Ui(QtWidgets.QMainWindow):
     def __init__(self):
@@ -23,7 +24,13 @@ class Ui(QtWidgets.QMainWindow):
     def connectSerialBP(self):
         # This is executed when the button is pressed
         print('Connecting to com port:' + self.comInput.text() + ' Baud Rate ' + self.sBaudRate.text())
-        self.lcdS1.display(10)
+        ser = serial.Serial('COM6')
+        # ser.baudrate = int(self.sBaudRate.text())
+        # ser.port = self.comInput.text()        
+        ser_bytes = ser.readline()
+        decoded_bytes = float(ser_bytes[0:len(ser_bytes)-2].decode("utf-8"))
+        print(decoded_bytes)
+        self.lcdS1.display(decoded_bytes)
 
 app = QtWidgets.QApplication(sys.argv)
 window = Ui()
