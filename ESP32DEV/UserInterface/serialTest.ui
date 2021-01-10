@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>511</width>
-    <height>294</height>
+    <width>516</width>
+    <height>241</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,17 +30,29 @@
      <property name="verticalSpacing">
       <number>1</number>
      </property>
-     <item row="0" column="4">
+     <item row="0" column="3">
       <widget class="QLineEdit" name="sBaudRate">
        <property name="text">
         <string>Baud Rate</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="2">
+     <item row="0" column="1">
       <widget class="QLineEdit" name="comInput">
        <property name="text">
         <string>Com Port</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QLabel" name="label">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Baud Rate</string>
        </property>
       </widget>
      </item>
@@ -53,18 +65,6 @@
        </property>
        <property name="text">
         <string>Connect</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="3">
-      <widget class="QLabel" name="label">
-       <property name="font">
-        <font>
-         <pointsize>11</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Baud Rate</string>
        </property>
       </widget>
      </item>
@@ -103,6 +103,8 @@
        <property name="font">
         <font>
          <pointsize>16</pointsize>
+         <weight>50</weight>
+         <bold>false</bold>
         </font>
        </property>
        <property name="text">
@@ -112,23 +114,6 @@
      </item>
     </layout>
    </widget>
-  </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>511</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <widget class="QMenu" name="menuFIle">
-    <property name="title">
-     <string>FIle</string>
-    </property>
-    <addaction name="actionExit"/>
-   </widget>
-   <addaction name="menuFIle"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionExit">

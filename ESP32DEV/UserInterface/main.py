@@ -1,15 +1,32 @@
 from PyQt5 import QtWidgets, uic
 import sys
 import serial
+from PyQt5.QtCore import *
+
+class serialThread(QThread): # Worker thread
+    updateS1 = pyqtSignal(int)
+
+    def __init__(self):
+        QThread.__init__(self)
+        self.comPort = ""
+        
+    def run(self):
+        ser = serial.Serial(self.comPort)   
+        while True:
+            ser_bytes = ser.readline()        
+            decoded_bytes = float(ser_bytes[0:len(ser_bytes)-2].decode("utf-8"))
+            self.updateS1.emit(decoded_bytes)
+            print(decoded_bytes)
+
 
 class Ui(QtWidgets.QMainWindow):
     def __init__(self):
         super(Ui, self).__init__()
-        uic.loadUi('serialTest.ui', self)
+        uic.loadUi('serialTest.ui', self)        
 
         # Buttons
         self.button = self.findChild(QtWidgets.QPushButton, 'serialConnect') # Find the button
-        self.button.clicked.connect(self.connectSerialBP) # Remember to pass the definition/method, not the return value!
+        self.button.clicked.connect(self.comThread) # Remember to pass the definition/method, not the return value!
 
         # Inputs
         self.comInput = self.findChild(QtWidgets.QLineEdit, 'comInput')
@@ -18,19 +35,22 @@ class Ui(QtWidgets.QMainWindow):
         # LCD display
         self.lcdS1 = self.findChild(QtWidgets.QLCDNumber, 's1Readout')
         self.lcdS2 = self.findChild(QtWidgets.QLCDNumber, 's2Readout')
+        
+        # Serial Coms
+        self.comThread = serialThread()
+
 
         self.show()
 
-    def connectSerialBP(self):
-        # This is executed when the button is pressed
-        print('Connecting to com port:' + self.comInput.text() + ' Baud Rate ' + self.sBaudRate.text())
-        ser = serial.Serial('COM6')
-        # ser.baudrate = int(self.sBaudRate.text())
-        # ser.port = self.comInput.text()        
-        ser_bytes = ser.readline()
-        decoded_bytes = float(ser_bytes[0:len(ser_bytes)-2].decode("utf-8"))
-        print(decoded_bytes)
-        self.lcdS1.display(decoded_bytes)
+    def comThread(self):
+        self.comThread.comPort = self.comInput.text()
+        self.comThread.start()
+        self.comThread.updateS1.connect(self.evt_updateS1)    
+
+    def evt_updateS1(self, val):
+        self.lcdS1.display(val)  
+
+
 
 app = QtWidgets.QApplication(sys.argv)
 window = Ui()
