@@ -11,10 +11,10 @@ float fmap(float x, float in_min, float in_max, float out_min, float out_max)
 // Get pressure data
 void getPress(){
   resultData[0] = avgPress(A0, 100);
-  resultData[1] = avgPress(A1, 100);
-  resultData[2] = avgPress(A2, 100);
-  resultData[3] = avgPress(A3, 100);
-  resultData[4] = avgPress(A6, 100);  
+//  resultData[1] = avgPress(A1, 100);
+//  resultData[2] = avgPress(A2, 100);
+//  resultData[3] = avgPress(A3, 100);
+//  resultData[4] = avgPress(A6, 100);  
 }
 
 //______________________________________________
@@ -54,8 +54,9 @@ void loop() {
   // put your main code here, to run repeatedly:
   int anPin;
   int ns;
-  avgPress(A0, 100);
-  String datString = String(resultData[0]) + "," + String(resultData[1]) + "," + String(resultData[2]) + "," + String(resultData[3]) + "," + String(resultData[4]);
+//  avgPress(A0, 100);
+  getPress();
+  String datString = String(resultData[0],3) + "," + String(resultData[1]) + "," + String(resultData[2]) + "," + String(resultData[3]) + "," + String(resultData[4]);
   Serial.println(datString);
   delay(500);
 }
