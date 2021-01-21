@@ -2,6 +2,7 @@ from PyQt5 import QtWidgets, uic
 import sys
 from serial import Serial
 from PyQt5.QtCore import *
+import glob
 
 class serialThread(QThread): # Worker thread
     updateS1 = pyqtSignal(int)
