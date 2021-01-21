@@ -1,6 +1,6 @@
 from PyQt5 import QtWidgets, uic
 import sys
-import serial
+from serial import Serial
 from PyQt5.QtCore import *
 
 class serialThread(QThread): # Worker thread
@@ -11,7 +11,7 @@ class serialThread(QThread): # Worker thread
         self.comPort = ""
         
     def run(self):
-        ser = serial.Serial(self.comPort)   
+        ser = Serial(self.comPort)   
         while True:
             ser_bytes = ser.readline()        
             decoded_bytes = float(ser_bytes[0:len(ser_bytes)-2].decode("utf-8"))
