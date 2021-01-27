@@ -1,4 +1,4 @@
-from PyQt5 import QtWidgets, uic
+from PyQt5 import QtWidgets, uic, QtGui
 import sys
 from serial import Serial
 from PyQt5.QtCore import *
@@ -11,7 +11,7 @@ from pyqtgraph import PlotWidget
 import pyqtgraph as pg
 
 class serialThread(QThread): # Worker thread
-    updateS1 = pyqtSignal(int)
+    updateS1 = pyqtSignal(str)
 
     def __init__(self):
         QThread.__init__(self)
@@ -22,13 +22,15 @@ class serialThread(QThread): # Worker thread
         ser = Serial(self.comPort)   
         while True:
             ser_bytes = ser.readline()        
-            decoded_bytes = float(ser_bytes[0:len(ser_bytes)-2].decode("utf-8"))
-            self.updateS1.emit(decoded_bytes)
+            decoded_bytes = str(ser_bytes[0:len(ser_bytes)-2].decode("utf-8"))
+            
             currTime = datetime.datetime.now()
+            listResults = decoded_bytes[0:5]
+            print(listResults)
+            self.updateS1.emit(listResults)
             results =  str(currTime) + ', ' + str(decoded_bytes) + '\n'
             writeFile('test1.csv', results)
-            # print(decoded_bytes)    
-    
+            # print(decoded_bytes)     
 
 class plotThread(QThread):
     def __init__(self):
@@ -49,6 +51,7 @@ class Ui(QtWidgets.QMainWindow):
         uic.loadUi('serialTest.ui', self)        
         self.currTime = []
         self.reading = []
+
         # Buttons
         self.button = self.findChild(QtWidgets.QPushButton, 'serial_connect_1') # Find the button
         self.button.clicked.connect(self.comThread) # Remember to pass the definition/method, not the return value!
@@ -75,9 +78,9 @@ class Ui(QtWidgets.QMainWindow):
         self.visThread1 = plotThread()
         # self.plot([1,2,3,4,5,6,7,8,9,10], [30,32,34,32,33,31,29,32,35,45])
 
+        self.dataLine = self.graphWidget.plot(self.currTime, self.reading)
+
         self.show()
-
-
 
     # def plot(self, hour, temperature):
     #     self.graphWidget.plot(hour, temperature)
@@ -98,8 +101,16 @@ class Ui(QtWidgets.QMainWindow):
     def evt_updateS1(self, val):
         self.lcdS1.setText(str(val)) 
         self.currTime.append(time.time())
-        self.reading.append(val)
-        self.graphWidget.plot(self.currTime[len(self.currTime)-30: len(self.currTime)], self.reading[len(self.currTime)-30: len(self.currTime)])
+        self.reading.append(float(val))
+        self.currTime = self.currTime[-10:]
+        self.reading = self.reading[-10:]
+        print(self.reading)
+        # if len(self.currTime) > 30:
+        #     self.currTime.remove(0)
+        #     self.reading.remove(0)
+        #     print('Purge List')
+        # self.graphWidget.plot(self.currTime, self.reading)
+        self.dataLine.setData(self.currTime, self.reading)
         # self.plot(currTime, val)
 
 
@@ -136,8 +147,8 @@ def writeFile(filename, data):
 	    file.write(data)
 	    file.close()
 
-def plot(self, hour, temperature):
-        self.graphWidget.plot(hour, temperature)
+# def plot(self, hour, temperature):
+#         self.graphWidget.plot(hour, temperature)
 
 
 app = QtWidgets.QApplication(sys.argv)
