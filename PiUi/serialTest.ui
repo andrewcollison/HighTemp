@@ -333,7 +333,7 @@ QPushButton:default {
       <string>Graph</string>
      </property>
     </widget>
-    <widget class="QLabel" name="s1_output_2">
+    <widget class="QLabel" name="s2_output">
      <property name="geometry">
       <rect>
        <x>450</x>
@@ -388,6 +388,16 @@ QPushButton:default {
       <enum>QFrame::Raised</enum>
      </property>
     </widget>
+    <widget class="PlotWidget" name="graphWidget_2" native="true">
+     <property name="geometry">
+      <rect>
+       <x>410</x>
+       <y>150</y>
+       <width>361</width>
+       <height>241</height>
+      </rect>
+     </property>
+    </widget>
     <zorder>frame_3</zorder>
     <zorder>com_select</zorder>
     <zorder>serial_connect_1</zorder>
@@ -400,7 +410,8 @@ QPushButton:default {
     <zorder>com_select_2</zorder>
     <zorder>serial_input_2</zorder>
     <zorder>graph_s1_2</zorder>
-    <zorder>s1_output_2</zorder>
+    <zorder>s2_output</zorder>
+    <zorder>graphWidget_2</zorder>
    </widget>
   </widget>
   <action name="actionExit">
