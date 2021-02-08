@@ -18,7 +18,7 @@ class DispData():
 
             print("Plotting Data")
             plt.plot(df)
-            plt.legend(["Ch 1", "Ch 2", "Ch 3", "Ch 4", "Ch 5"])
+            # plt.legend(["Ch 1", "Ch 2", "Ch 3", "Ch 4", "Ch 5"])
             plt.title(self.plt_title)
             plt.show()
 
