@@ -1,8 +1,5 @@
-#include <SPI.h>
-#include <SD.h>
-//#include "RTClib.h"
-#include <Adafruit_MAX31856.h>
-
+// Arduino level sensor code
+// Anderw Collison
 
 const int level_1 = 2;
 const int level_2 = 3;
@@ -49,12 +46,6 @@ void setup() {
   // put your setup code here, to run once:
   // start serial port
   Serial.begin(9600);
-  Serial.println("got to here");
-  // Setting Up RTC
-//  if (! rtc.begin()) {
-//    Serial.println("Couldn't find RTC");
-//    while (1);
-//  }
 
   pinMode(level_1, INPUT);
   pinMode(level_2, INPUT);
@@ -69,9 +60,9 @@ void setup() {
 // Main Loop
 void loop() {
   // put your main code here, to run repeatedly:
-  // Get temperature from sensor
-    
+      
   String  level_out = get_level();
   Serial.println(level_out);
   delay(1000);
+
 }

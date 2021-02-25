@@ -1,0 +1,6 @@
+2021-02-25 13:20:17.829967: Error opening: COM3
+2021-02-25 13:20:22.854520: Error opening: COM3
+2021-02-25 13:20:27.901608: Error opening: COM3
+2021-02-25 13:20:32.978700: Error opening: COM3
+2021-02-25 13:20:38.032308: Error opening: COM3
+2021-02-25 13:20:43.086281: Error opening: COM3
