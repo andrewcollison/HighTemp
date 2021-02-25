@@ -30,7 +30,7 @@ String get_level(){
     probe[3] = 1;
     }
 
-  major_result = "Level 1: " + String(probe[3]) + " Level 2: " + String(probe[2]) + " Level 3: " + String(probe[1]) + " Level 4: " + String(probe[0]);
+  major_result = String(probe[3]) + ", " + String(probe[2]) + ", " + String(probe[1]) + ", " + String(probe[0]);
   Serial.println(major_result);
 
   
