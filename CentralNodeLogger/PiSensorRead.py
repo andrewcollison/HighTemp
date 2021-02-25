@@ -4,6 +4,7 @@ import pandas
 import time
 import sys
 from threading import Thread
+import glob
 
 def writeFile(filename, data):
 	file = open(filename, "a")
@@ -58,10 +59,7 @@ def runA(port):
 			err_str = str(currTime)+ ": Error opening: " + port + "\n" 
 			writeFile("ErrorLog.txt", err_str)
 			print(err_str)
-			time.sleep(5) 			
-        
-
-
+			time.sleep(5)
 
 if __name__ == "__main__":
 	
