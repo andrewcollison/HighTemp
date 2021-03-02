@@ -14,7 +14,7 @@ def writeFile(filename, data):
 		file.close()
 	except:
 		currTime = str(datetime.datetime.now())
-		err_str = currTime + ": Error writing to file: " + filename + ", " + data 
+		err_str = currTime + ": Error writing to file: " + filename + ", " + data + "\n" 
 		writeFile("ErrorLog.txt", err_str)
 		print(err_str)
 
@@ -29,7 +29,7 @@ def writeDatabase(db_name, db_table, date_time, data_string, com_port):
 		conn.commit()
 		conn.close()
 	except:
-		err_str = date_time + ": Error writing to database: " + db_name + ", " + db_table 
+		err_str = date_time + ": Error writing to database: " + db_name + ", " + db_table + "\n" 
 		writeFile("ErrorLog.txt", err_str)
 		print(err_str)
 
