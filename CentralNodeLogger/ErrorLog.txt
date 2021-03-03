@@ -469,3 +469,20 @@
 2021-03-02 12:38:43.213561: Error opening: COM3
 2021-03-02 12:38:48.276447: Error opening: COM3
 2021-03-02 13:47:08.083505: Error writing to database: CentralDataBase.db, SenseData
+2021-03-02 13:55:18.541636: Error writing to database: CentralDataBase.db, SenseData
+2021-03-02 14:08:09.930001: Error writing to database: CentralDataBase.db, SenseData
+2021-03-02 14:29:14.988647: Error writing to database: CentralDataBase.db, SenseData
+2021-03-02 15:24:57.173039: Error writing to database: CentralDataBase.db, SenseData
+2021-03-02 15:25:42.064438: Error writing to database: CentralDataBase.db, SenseData
+2021-03-02 15:36:32.974841: Error writing to database: CentralDataBase.db, SenseData
+2021-03-03 09:41:18.006577: Error writing to database: CentralDataBase.db, SenseData
+2021-03-03 09:41:26.157152: Error writing to database: CentralDataBase.db, SenseData
+2021-03-03 09:57:33.386757: Error writing to database: CentralDataBase.db, SenseData
+2021-03-03 11:38:27.251997: Error writing to database: CentralDataBase.db, SenseData
+2021-03-03 12:00:37.540282: Error writing to database: CentralDataBase.db, SenseData
+2021-03-03 12:11:52.973940: Error writing to database: CentralDataBase.db, SenseData
+2021-03-03 12:55:40.992807: Error writing to database: CentralDataBase.db, SenseData
+2021-03-03 13:05:28.633416: Error writing to database: CentralDataBase.db, SenseData
+2021-03-03 13:08:48.585073: Error writing to database: CentralDataBase.db, SenseData
+2021-03-03 13:48:31.778567: Error writing to database: CentralDataBase.db, SenseData
+2021-03-03 13:54:24.670214: Error writing to database: CentralDataBase.db, SenseData

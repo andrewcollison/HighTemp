@@ -1,3 +1,10 @@
+""" 
+Central Node Logging Software ####
+Written by: Andrew Collison 
+Description: Takes data collected over serial, ads a timestamp and 
+logs the data into a database and csv file. 
+"""
+
 from serial import Serial
 import datetime
 import pandas 
@@ -7,7 +14,11 @@ from threading import Thread
 import glob
 import sqlite3
 
-def writeFile(filename, data):
+def writeFile(filename, data): 
+	"""
+	Takes the input data and writes it into a standard .txt or .csv file
+	if an error occurs during this process an error is logged to an error file along with the data. 
+	"""
 	try:
 		file = open(filename, "a")
 		file.write(data)
@@ -19,6 +30,10 @@ def writeFile(filename, data):
 		print(err_str)
 
 def writeDatabase(db_name, db_table, date_time, data_string, com_port):
+	"""
+	Writes the data into an SQL database
+	outputs an error into the error log file if data is written incorrectly 
+	""" 
 	try:
 		conn = sqlite3.connect(db_name)
 		c = conn.cursor()
@@ -65,15 +80,15 @@ def runA(port):
 	while True:
 		try:
 			serport = port
-			ser = Serial(serport)
-			ser_bytes = ser.readline()
+			ser = Serial(serport) # connects to serial port
+			ser_bytes = ser.readline()# reads data from port
 			decoded_bytes = str(ser_bytes[0:len(ser_bytes)-2].decode("utf-8"))
-			currTime = datetime.datetime.now()
+			currTime = datetime.datetime.now() # gets current datetime (system time)
 			results =  str(currTime) + ', ' + decoded_bytes + ', ' + port +'\n'
 			ser.close()
 			fileName = "Data_"+port+".txt"
-			writeFile(fileName, results)
-			writeDatabase('CentralDataBase.db', 'SenseData', str(currTime), decoded_bytes, port)
+			writeFile(fileName, results) # data to txt file
+			writeDatabase('CentralDataBase.db', 'SenseData', str(currTime), decoded_bytes, port) # data to SQL
 			print(results)
 			time.sleep(1)
 		
@@ -86,15 +101,15 @@ def runA(port):
 
 if __name__ == "__main__":
 	
-	threads = []
-	comList = serial_ports()
+	threads = [] # list for each thread
+	comList = serial_ports() # returns list of avaliable com ports
 	print(comList)
 
-	for i in range(len(comList)):
-		t = Thread(target = runA, args=[comList[i]])
+	for i in range(len(comList)): # starts threads based on the number of com ports connected
+		t = Thread(target = runA, args=[comList[i]]) # create a thread for each comport
 		t.setDaemon(True)
-		t.start()
-		threads.append(t)
+		t.start() # start each thread
+		threads.append(t) # add thread to list
 
 	while True:
-		pass
+		pass # no main loop. 

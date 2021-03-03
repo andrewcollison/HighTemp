@@ -51,23 +51,23 @@ Adafruit_MAX31856 maxthermo5 = Adafruit_MAX31856(TS5_chipSelect);
 //  return time_data;  
 //}
   
-//_____________________________________________________
-// Function: Store Data
-void storeData(String filename, String readout){
-    File dataFile = SD.open(filename, FILE_WRITE);
-  // if the file is available, write to it:
-  if (dataFile) {
-    dataFile.println(readout);
-    dataFile.close();
-    // print to the serial port too:
-    //Serial.println(readout);
-  }
-  // if the file isn't open, pop up an error:
-  else {
-    Serial.println("error opening data file");
-    digitalWrite(A2, HIGH);
-  }  
-}
+////_____________________________________________________
+//// Function: Store Data
+//void storeData(String filename, String readout){
+//    File dataFile = SD.open(filename, FILE_WRITE);
+//  // if the file is available, write to it:
+//  if (dataFile) {
+//    dataFile.println(readout);
+//    dataFile.close();
+//    // print to the serial port too:
+//    //Serial.println(readout);
+//  }
+//  // if the file isn't open, pop up an error:
+//  else {
+//    Serial.println("error opening data file");
+//    digitalWrite(A2, HIGH);
+//  }  
+//}
 
 
 //_____________________________________________________
