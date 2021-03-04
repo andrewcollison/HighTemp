@@ -13,6 +13,7 @@ import sys
 from threading import Thread
 import glob
 import sqlite3
+import re
 
 def writeFile(filename, data): 
 	"""
@@ -86,7 +87,8 @@ def runA(port):
 			currTime = datetime.datetime.now() # gets current datetime (system time)
 			results =  str(currTime) + ', ' + decoded_bytes + ', ' + port +'\n'
 			ser.close()
-			fileName = "Data_"+port+".txt"
+			fileNameInit = "Data_"+port+".txt"
+			fileName = re.sub('[/dev/]', '', fileNameInit)
 			writeFile(fileName, results) # data to txt file
 			writeDatabase('CentralDataBase.db', 'SenseData', str(currTime), decoded_bytes, port) # data to SQL
 			print(results)
