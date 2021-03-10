@@ -90,7 +90,7 @@ def runA(port):
 			fileNameInit = "Data_"+port+".txt"
 			fileName = re.sub('[/dev/]', '', fileNameInit)
 			writeFile(fileName, results) # data to txt file
-			writeDatabase('CentralDataBase.db', 'SenseData', str(currTime), decoded_bytes, port) # data to SQL
+			# writeDatabase('CentralDataBase.db', 'SenseData', str(currTime), decoded_bytes, port) # data to SQL
 			print(results)
 			time.sleep(1)
 		

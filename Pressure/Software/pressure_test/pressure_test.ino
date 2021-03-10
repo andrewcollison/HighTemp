@@ -10,7 +10,7 @@ float fmap(float x, float in_min, float in_max, float out_min, float out_max)
 //______________________________________________
 // Get pressure data
 void getPress(){
-  resultData[0] = avgPress(A0, 100);
+  resultData[0] = avgPress(A0, 50);
 //  resultData[1] = avgPress(A1, 100);
 //  resultData[2] = avgPress(A2, 100);
 //  resultData[3] = avgPress(A3, 100);
