@@ -40,7 +40,7 @@ def writeDatabase(db_name, db_table, date_time, data_string, com_port):
 		c = conn.cursor()
 		sql_command = "INSERT INTO {db_table}(date_time, level_data, com_port) VALUES( '{date_time}', '{data_string}', '{port}' )"\
 			.format(db_table = db_table, date_time = date_time, data_string = data_string, port = com_port) 
-		print(sql_command)
+		# print(sql_command)
 		c.execute(sql_command)
 		conn.commit()
 		conn.close()
@@ -90,7 +90,7 @@ def runA(port):
 			fileNameInit = "Data_"+port+".txt"
 			fileName = re.sub('[/dev/]', '', fileNameInit)
 			writeFile(fileName, results) # data to txt file
-			# writeDatabase('CentralDataBase.db', 'SenseData', str(currTime), decoded_bytes, port) # data to SQL
+			writeDatabase('CentralDataBase.db', 'SenseData', str(currTime), decoded_bytes, port) # data to SQL
 			print(results)
 			time.sleep(1)
 		
